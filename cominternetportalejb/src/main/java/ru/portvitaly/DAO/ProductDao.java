@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.List;
 
-@Local
+//@Local
 public interface ProductDao {
 
     List<Product> allProducts() throws SQLException, NamingException;

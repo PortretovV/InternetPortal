@@ -7,7 +7,7 @@ import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.List;
 
-@Remote
+//@Remote
 public interface OrderDao {
 
     List<Order> allOrders() throws SQLException, NamingException;

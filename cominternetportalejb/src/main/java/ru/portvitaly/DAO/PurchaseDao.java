@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.List;
 
-@Remote
+//@Remote
 public interface PurchaseDao {
 
     int addPurchase(List<Lot> products, Order order) throws SQLException, NamingException;
