@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import javax.naming.Context;
 
 @Stateless
-public class Dao implements DaoInterface {
+public class Dao {
 
     @Resource(name="jdbc/my_cklad")
     protected  DataSource dataSource;
@@ -34,12 +34,12 @@ public class Dao implements DaoInterface {
     }
 
 
-    public Connection openConnection() throws SQLException {
+    protected Connection openConnection() throws SQLException {
          connection = dataSource.getConnection();
         return connection;
     }
 
-    public void closeConnection() throws SQLException {
+    protected void closeConnection() throws SQLException {
         if (connection != null)
             connection.close();
     }
