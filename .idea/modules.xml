@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/InternetPortal.iml" filepath="$PROJECT_DIR$/InternetPortal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cominternetportalear/cominternetportalear.iml" filepath="$PROJECT_DIR$/cominternetportalear/cominternetportalear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cominternetportalejb/cominternetportalejb.iml" filepath="$PROJECT_DIR$/cominternetportalejb/cominternetportalejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cominternetportalwar/cominternetportalwar.iml" filepath="$PROJECT_DIR$/cominternetportalwar/cominternetportalwar.iml" />
+    </modules>
+  </component>
+</project>
