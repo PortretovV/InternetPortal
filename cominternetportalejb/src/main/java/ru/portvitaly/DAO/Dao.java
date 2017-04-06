@@ -27,7 +27,7 @@ public class Dao {
         Context ctx = null;
         try {
             ctx = new InitialContext();
-            dataSource = (DataSource)ctx.lookup("java:comp/env/jdbc/my_shop");
+            dataSource = (DataSource)ctx.lookup("java:comp/env/jdbc/my_cklad");
         } catch (NamingException e) {
             e.printStackTrace();
         }

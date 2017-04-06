@@ -5,6 +5,7 @@ import ru.portvitaly.DAO.Dao;
 import ru.portvitaly.DAO.OrderDao;
 import ru.portvitaly.entity.Order;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
@@ -15,7 +16,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Stateless
+@Remote
 public class OrderDaoImpl extends Dao implements OrderDao {
     private final String ALL_ORDERS = "SELECT `id_order`, `article`, `cost`, `width`, `height`, `length` FROM orders";
     private final String ADD_ORDER = "INSERT INTO orders (id_order, article, cost, width, height, length) VALUES (NULL, ?, ?, ?, ?, ?)";

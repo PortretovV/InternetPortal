@@ -9,6 +9,7 @@ import ru.portvitaly.entity.Product;
 
 
 import javax.ejb.EJB;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import javax.naming.NamingException;
@@ -19,17 +20,19 @@ import java.util.List;
 
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ProductManage implements Serializable {
+
+    @EJB
+    private BasketBean basketBean;
+    @EJB
+    ProductDao q;
 
     private List<Product> products = new ArrayList<>();
     private Product product = new Product();
     private int productCount;
 
-    @EJB
-    ProductDao q;
 
-    private BasketBean basketBean = new BasketBean();
 
     public List<Product> getProducts() {
         try {
@@ -56,13 +59,7 @@ public class ProductManage implements Serializable {
         this.productCount = productCount;
     }
 
-    public String index(){
-        return "index";
-    }
 
-    public String basket(){
-        return "basket";
-    }
 
 
     public String buyProducts(){

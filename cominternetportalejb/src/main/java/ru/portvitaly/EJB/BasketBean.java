@@ -23,31 +23,29 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-
-@Named(value = "Basket")
+@Stateful
 @ConversationScoped
+@Named(value = "Basket")
 public class BasketBean implements BasketLocalInterface, Serializable {
 
     @EJB
     OrderDao orderDao;
     @EJB
     PurchaseDao purchaseDao;
+    @EJB
+    ProductDao q;
+
     @Inject
     private Conversation conversation;
 
-    @PostConstruct
-    public void init(){
-        if(conversation.isTransient())
-            conversation.begin();
-    }
-
-    //@PreDestroy
-    public void destroy(){
-        conversation.end();
-    }
-
-
+    private List<Lot> goods = new ArrayList<>();
+    private Order order;
     private Product product = new Product();
+
+    public List<Lot> getGoods() {
+        return goods;
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -56,8 +54,21 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         this.product = product;
     }
 
-    @EJB
-    ProductDao q;
+
+    @PostConstruct
+    private void init(){
+        if(conversation.isTransient())
+            conversation.begin();
+    }
+
+    @PreDestroy
+    private void destroy(){
+        conversation.end();
+    }
+
+    public void addProduct(Product product, int countProduct){
+        this.goods.add(new Lot(product,countProduct));
+    }
 
 
     public String detail(int id){
@@ -69,38 +80,27 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         return "detail";
     }
 
-    private List<Lot> products = new ArrayList<>();
 
-    private Order order;
-
-    public List<Lot> getProducts() {
-        return products;
-    }
-
-    public void addProduct(Product product, int countProduct){
-        this.products.add(new Lot(product,countProduct));
-    }
 
     public void deleteProduct(Lot lot){
-        this.products.remove(lot);
+        this.goods.remove(lot);
     }
 
     public void editProduct(Lot oldLot, int count){
-        Lot newLot = oldLot;
-        newLot.setCount(count);
+        oldLot.setCount(count);
     }
 
     private void createOrder(){
-        if(this.products.isEmpty())
+        if(this.goods.isEmpty())
             return;
         Random r = new Random();
         int width = 700 - r.nextInt(10);
         int lenght = 1000 - r.nextInt(10);
         int height = 400 - r.nextInt(10);
-        int count = products.size();
+        int count = goods.size();
         String article = UUID.randomUUID().toString().substring(0,45);
         int cost = 0;
-        for (Lot l : products) {
+        for (Lot l : goods) {
             cost += l.getProduct().getCost();
         }
 
@@ -108,14 +108,14 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     }
 
     private int createPurchase(){
-        if(products.isEmpty() || order == null)
+        if(goods.isEmpty() || order == null)
             return 0;
 
         //OrderDao orderDao = new OrderDaoImpl();
         //PurchaseDao purchaseDao = new PurchaseDaoImpl();
         try {
             this.order = orderDao.addOrder(order);
-            int result = purchaseDao.addPurchase(products,order);
+            int result = purchaseDao.addPurchase(goods,order);
             if(result == 1){
                 destroy();
                 return 1;

@@ -5,6 +5,7 @@ import ru.portvitaly.DAO.PurchaseDao;
 import ru.portvitaly.entity.Lot;
 import ru.portvitaly.entity.Order;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
@@ -12,7 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-
+@Stateless
+@Remote
 public class PurchaseDaoImpl extends Dao implements PurchaseDao {
     private final String ADD_PURCHASE = " INSERT INTO purchase (id_purchase, id_order, id_product, count) VALUE  (NULL, ?, ?, ?)";
 

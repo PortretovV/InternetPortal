@@ -6,6 +6,7 @@ import ru.portvitaly.DAO.ProductDao;
 import ru.portvitaly.entity.Product;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
 import java.sql.PreparedStatement;
@@ -14,7 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Stateless
+@Remote
 public class ProductDaoImpl extends Dao implements ProductDao {
     private final String ALL_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products";
     //private final String SELECT_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products WHERE `id_product` = ?";

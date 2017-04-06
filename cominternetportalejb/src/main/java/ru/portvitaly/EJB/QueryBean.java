@@ -4,6 +4,8 @@ import ru.portvitaly.DAO.ProductDao;
 import ru.portvitaly.entity.Product;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.naming.NamingException;
@@ -12,9 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestScoped
-@Named(value = "QueryEJB")
-public class QueryBean implements  Serializable {
+
+@Stateless
+public class QueryBean  {
     @EJB
     ProductDao productDao;
     @EJB
