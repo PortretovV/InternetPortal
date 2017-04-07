@@ -21,13 +21,17 @@ public class ProductManage implements Serializable {
     @EJB
     private ProductDao q;
 
-    private List<Product> products = new ArrayList<>();
-    private Product product = new Product();
-    private int productCount;
+    private List<Product> products;
+    private Product product;
+
 
     //Получение списка товаров
     public List<Product> getProducts() {
-        products = basketBean.allProducts();
+        try {
+            products = q.allProducts();
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
         return products;
     }
 
@@ -35,26 +39,23 @@ public class ProductManage implements Serializable {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+//    private int productCount;
+//    public int getProductCount() {
+//        return productCount;
+//    }
+//
+//    public void setProductCount(int productCount) {
+//        this.productCount = productCount;
+//    }
 
-    public int getProductCount() {
-        return productCount;
-    }
-
-    public void setProductCount(int productCount) {
-        this.productCount = productCount;
-    }
-
-    public Product productById(int id)  {
-        Product p = null;
+    //Получение детальной информации о товарах
+    public String detail(int id){
         try {
-            p = q.getProductById(id);
+            product = q.getProductById(id);
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }
-        return p;
+        return "detail";
     }
 
 
@@ -66,10 +67,7 @@ public class ProductManage implements Serializable {
             return "failed";
     }
 
-    public String detail(int id){
-        product = basketBean.productById(id);
-        return "detail";
-    }
+
 
     public String addToBasket(Product product, int countProduct){
         basketBean.addProduct(product, countProduct);
