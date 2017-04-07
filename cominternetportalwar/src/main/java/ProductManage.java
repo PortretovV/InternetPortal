@@ -2,7 +2,9 @@ import ru.portvitaly.DAO.ProductDao;
 import javax.faces.bean.ManagedBean;
 
 import ru.portvitaly.EJB.BasketBean;
+import ru.portvitaly.EJB.BasketLocalInterface;
 import ru.portvitaly.EJB.QueryBean;
+import ru.portvitaly.EJB.QueryBeanInterface;
 import ru.portvitaly.entity.Lot;
 import ru.portvitaly.entity.Order;
 import ru.portvitaly.entity.Product;
@@ -20,26 +22,22 @@ import java.util.List;
 
 
 @ManagedBean
-@RequestScoped
 public class ProductManage implements Serializable {
 
     @EJB
-    private BasketBean basketBean;
+    private BasketLocalInterface basketBean;
     @EJB
-    ProductDao q;
+    private ProductDao q;
+    @EJB
+    private QueryBeanInterface queryBean;
 
     private List<Product> products = new ArrayList<>();
     private Product product = new Product();
     private int productCount;
 
-
-
+    //Получение списка товаров
     public List<Product> getProducts() {
-        try {
-            this.products = q.allProducts();
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
+        products = basketBean.allProducts();
         return products;
     }
 
@@ -59,7 +57,15 @@ public class ProductManage implements Serializable {
         this.productCount = productCount;
     }
 
-
+    public Product productById(int id)  {
+        Product p = null;
+        try {
+            p = q.getProductById(id);
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
 
 
     public String buyProducts(){
@@ -71,11 +77,7 @@ public class ProductManage implements Serializable {
     }
 
     public String detail(int id){
-        try {
-            product = q.getProductById(id);
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
+        product = basketBean.productById(id);
         return "detail";
     }
 

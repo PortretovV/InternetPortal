@@ -14,20 +14,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Stateless
-public class QueryBean  {
+public class QueryBean implements QueryBeanInterface{
     @EJB
     ProductDao productDao;
     @EJB
     BasketBean basketBean;
 
     public List<Product> getProducts() {
-        this.products = allProducts();
+        List<Product> products = allProducts();
         return products;
     }
 
-    List<Product> products;
+
 
     private Product product;
     public Product getProduct() {

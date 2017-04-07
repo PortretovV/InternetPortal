@@ -54,12 +54,11 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         this.product = product;
     }
 
-
-    @PostConstruct
-    private void init(){
-        if(conversation.isTransient())
-            conversation.begin();
-    }
+//    @PostConstruct
+//    private void init(){
+//        if(conversation.isTransient())
+//            conversation.begin();
+//    }
 
     @PreDestroy
     private void destroy(){
@@ -71,16 +70,28 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     }
 
 
-    public String detail(int id){
+    public List<Product> allProducts(){
+        List<Product> products = new ArrayList<>();
+
+        try {
+            products = q.allProducts();
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
+    public Product productById(int id) {
+        Product product = new Product();
+
         try {
             product = q.getProductById(id);
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }
-        return "detail";
+        return product;
     }
-
-
 
     public void deleteProduct(Lot lot){
         this.goods.remove(lot);
