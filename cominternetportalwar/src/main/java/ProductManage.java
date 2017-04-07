@@ -1,19 +1,11 @@
 import ru.portvitaly.DAO.ProductDao;
 import javax.faces.bean.ManagedBean;
 
-import ru.portvitaly.EJB.BasketBean;
 import ru.portvitaly.EJB.BasketLocalInterface;
-import ru.portvitaly.EJB.QueryBean;
-import ru.portvitaly.EJB.QueryBeanInterface;
-import ru.portvitaly.entity.Lot;
-import ru.portvitaly.entity.Order;
 import ru.portvitaly.entity.Product;
 
 
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
 import javax.naming.NamingException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -28,8 +20,6 @@ public class ProductManage implements Serializable {
     private BasketLocalInterface basketBean;
     @EJB
     private ProductDao q;
-    @EJB
-    private QueryBeanInterface queryBean;
 
     private List<Product> products = new ArrayList<>();
     private Product product = new Product();

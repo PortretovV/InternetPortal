@@ -54,11 +54,11 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         this.product = product;
     }
 
-//    @PostConstruct
-//    private void init(){
-//        if(conversation.isTransient())
-//            conversation.begin();
-//    }
+    @PostConstruct
+    private void init(){
+        if(conversation.isTransient())
+            conversation.begin();
+    }
 
     @PreDestroy
     private void destroy(){

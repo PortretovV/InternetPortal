@@ -9,8 +9,8 @@
 <body>
     <h:form>
         Артикул: <h:outputText value="#{productManage.product.article}"/><br/>
-        Кол-во товара: <h:outputText value="#{productManage.product.count}"/>
-        Стоимость: <h:outputText value="#{productManage.product.cost}"/>
+        Кол-во товара: <h:outputText value="#{productManage.product.count}"/><br/>
+        Стоимость: <h:outputText value="#{productManage.product.cost}"/><br/>
         Купить: <h:inputText value="#{productManage.productCount}"/>
         <h:commandButton action="#{productManage.addToBasket(productManage.product, productManage.productCount)}" value="Добавить в корзину"/>
     </h:form>
