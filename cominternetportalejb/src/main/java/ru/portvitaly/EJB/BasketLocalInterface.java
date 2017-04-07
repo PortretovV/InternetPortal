@@ -14,5 +14,6 @@ public interface BasketLocalInterface {
     void editProduct(Lot lot, int count);
     List<Product> allProducts();
     Product productById(int id);
+    List<Lot> getGoods();
 
 }

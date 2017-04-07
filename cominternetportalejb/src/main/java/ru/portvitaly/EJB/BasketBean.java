@@ -34,7 +34,6 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     PurchaseDao purchaseDao;
     @EJB
     ProductDao q;
-
     @Inject
     private Conversation conversation;
 
@@ -65,11 +64,12 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         conversation.end();
     }
 
+    //Добавление товара в список корзины
     public void addProduct(Product product, int countProduct){
         this.goods.add(new Lot(product,countProduct));
     }
 
-
+    //Вывод всех товаров из списока корзины
     public List<Product> allProducts(){
         List<Product> products = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         return products;
     }
 
-
+    //Вывод товара по Id
     public Product productById(int id) {
         Product product = new Product();
 
@@ -93,10 +93,12 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         return product;
     }
 
+    //Удаление товара из списока корзины
     public void deleteProduct(Lot lot){
         this.goods.remove(lot);
     }
 
+    //Изменение товара в списоке корзины
     public void editProduct(Lot oldLot, int count){
         oldLot.setCount(count);
     }
@@ -109,7 +111,7 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         int lenght = 1000 - r.nextInt(10);
         int height = 400 - r.nextInt(10);
         int count = goods.size();
-        String article = UUID.randomUUID().toString().substring(0,45);
+        String article = UUID.randomUUID().toString();
         int cost = 0;
         for (Lot l : goods) {
             cost += l.getProduct().getCost();

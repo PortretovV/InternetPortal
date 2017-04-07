@@ -12,17 +12,16 @@
 <body style="align-content: center">
 <h2>Ваша корзина</h2>
 <h:form>
-    <c:forEach items="#{Basket.products}" var="lots">
+    <c:forEach items="#{productManage.goods}" var="lots">
         Артикул: <h:outputText value="#{lots.product.article}"/><br/>
         Стоимость: <h:outputText value="#{lots.product.cost}"/><br/>
-        Кол-во: <h:inputText value="#{lots.count}"/><h:commandLink action="#{Basket.editProduct(lots, lots.count)}" value="Изменить"/>
+        Кол-во: <h:inputText value="#{lots.count}"/> <h:commandButton action="#{productManage.editProduct(lots, lots.count)}" value="Изменить"/>
         <br/>
-        <h:commandLink action="#{Basket.deleteProduct(lots)}" value="Удалить"/>
+        <h:commandLink action="#{productManage.deleteProduct(lots)}" value="Удалить"/>
         <br/><br/>
         <hr/>
     </c:forEach>
-
-    <h:commandButton action="#{QueryEJB.buyProducts}" value="Купить товары"/>
+    <h:commandButton action="#{productManage.buyProducts()}" value="Купить товары"/>
 </h:form>
 </body>
 
