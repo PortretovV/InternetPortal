@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
@@ -36,6 +37,8 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     ProductDao productDao;
     @Inject
     private Conversation conversation;
+    @Inject
+    private Event<Lot> insertProduct;
 
     private List<Lot> goods = new ArrayList<>();
     private Order order;
@@ -65,8 +68,11 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     }
 
     //Добавление товара в список корзины
+    //Создание события на основе товара
     public void addProduct(Product product, int countProduct){
-        this.goods.add(new Lot(product,countProduct));
+        Lot lot = new Lot(product,countProduct);
+        insertProduct.fire(lot);
+        this.goods.add(lot);
     }
 
 //    //Вывод всех товаров из списока корзины
