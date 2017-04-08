@@ -33,7 +33,7 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     @EJB
     PurchaseDao purchaseDao;
     @EJB
-    ProductDao q;
+    ProductDao productDao;
     @Inject
     private Conversation conversation;
 
@@ -69,29 +69,29 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         this.goods.add(new Lot(product,countProduct));
     }
 
-    //Вывод всех товаров из списока корзины
-    public List<Product> allProducts(){
-        List<Product> products = new ArrayList<>();
-
-        try {
-            products = q.allProducts();
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
-
-    //Вывод товара по Id
-    public Product productById(int id) {
-        Product product = new Product();
-
-        try {
-            product = q.getProductById(id);
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
-        return product;
-    }
+//    //Вывод всех товаров из списока корзины
+//    public List<Product> allProducts(){
+//        List<Product> products = new ArrayList<>();
+//
+//        try {
+//            products = productDao.allProducts();
+//        } catch (SQLException | NamingException e) {
+//            e.printStackTrace();
+//        }
+//        return products;
+//    }
+//
+//    //Вывод товара по Id
+//    public Product productById(int id) {
+//        Product product = new Product();
+//
+//        try {
+//            product = productDao.getProductById(id);
+//        } catch (SQLException | NamingException e) {
+//            e.printStackTrace();
+//        }
+//        return product;
+//    }
 
     //Удаление товара из списока корзины
     public void deleteProduct(Lot lot){
@@ -124,17 +124,31 @@ public class BasketBean implements BasketLocalInterface, Serializable {
         if(goods.isEmpty() || order == null)
             return 0;
 
-        //OrderDao orderDao = new OrderDaoImpl();
-        //PurchaseDao purchaseDao = new PurchaseDaoImpl();
         try {
             this.order = orderDao.addOrder(order);
             int result = purchaseDao.addPurchase(goods,order);
-            if(result == 1){
+            int resultUpdateProducts = updateProducts();
+            if(result == 1 && resultUpdateProducts == 1){
                 destroy();
                 return 1;
             }
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
-
+    //Обновление количества товаров в базе(Вычитаем из текущего, кол-во купленных)
+    private int updateProducts(){
+        try {
+            for (Lot lot: goods) {
+                Product product = lot.getProduct();
+                int oldCountProduct = product.getCount();
+                int newCountProduct = oldCountProduct - lot.getCount();
+                product.setCount(newCountProduct);
+                productDao.updateProduct(product);
+            }
+            return 1;
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }

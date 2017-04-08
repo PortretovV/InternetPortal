@@ -58,6 +58,7 @@ public class ProductManage implements Serializable {
     public String detail(int id){
         try {
             product = q.getProductById(id);
+            this.productCount = 1;
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }

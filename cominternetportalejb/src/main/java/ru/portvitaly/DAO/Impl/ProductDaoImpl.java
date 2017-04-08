@@ -21,6 +21,7 @@ public class ProductDaoImpl extends Dao implements ProductDao {
     private final String ALL_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products";
     //private final String SELECT_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products WHERE `id_product` = ?";
     private final String SELECT_PRODUCT = "SELECT * FROM products WHERE `id_product` = ?";
+    private final String UPDATE_COUNT_PRODUCT = "UPDATE products SET `count` = ? WHERE `id_product`= ?";
 
     @Override
     public List<Product> allProducts() throws SQLException, NamingException {
@@ -65,7 +66,20 @@ public class ProductDaoImpl extends Dao implements ProductDao {
         return product;
     }
 
+    @Override
+    public int updateProduct(Product product) throws SQLException, NamingException {
+        openConnection();
+        int resultOperation = 0;
+        try(PreparedStatement prepStatement = connection.prepareStatement(UPDATE_COUNT_PRODUCT)){
+            prepStatement.setInt(1,product.getCount());
+            prepStatement.setInt(2,product.getId());
 
+            resultOperation = prepStatement.executeUpdate();
+        }finally {
+            closeConnection();
+        }
+        return resultOperation;
+    }
 
 //    @Override
 //    public Product addProduct(Product product) throws SQLException, NamingException {
@@ -77,10 +91,7 @@ public class ProductDaoImpl extends Dao implements ProductDao {
 //
 //    }
 //
-//    @Override
-//    public Product updateProduct(Product product) throws SQLException, NamingException {
-//        return null;
-//    }
+
 
 
 }

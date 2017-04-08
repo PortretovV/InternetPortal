@@ -15,9 +15,10 @@ public interface ProductDao {
 
     Product getProductById(int idProduct) throws SQLException, NamingException;
 
+    int updateProduct(Product product) throws SQLException, NamingException;
+
 //    public Product addProduct(Product product) throws SQLException, NamingException;
 //
 //    public void deleteProduct(int idProduct) throws SQLException, NamingException;
-//
-//    public Product updateProduct(Product product) throws SQLException, NamingException;
+
 }
