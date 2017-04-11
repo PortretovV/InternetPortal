@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-@Remote
 public class OrderDaoImpl extends Dao implements OrderDao {
     private final String ALL_ORDERS = "SELECT `id_order`, `article`, `cost`, `width`, `height`, `length` FROM orders";
     private final String ADD_ORDER = "INSERT INTO orders (id_order, article, cost, width, height, length) VALUES (NULL, ?, ?, ?, ?, ?)";

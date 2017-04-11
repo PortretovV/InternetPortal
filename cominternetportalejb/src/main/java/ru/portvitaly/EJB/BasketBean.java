@@ -70,9 +70,11 @@ public class BasketBean implements BasketLocalInterface, Serializable {
     //Добавление товара в список корзины
     //Создание события на основе товара
     public void addProduct(Product product, int countProduct){
-        Lot lot = new Lot(product,countProduct);
-        insertProduct.fire(lot);
-        this.goods.add(lot);
+        if(product.getCount() < countProduct) {
+            Lot lot = new Lot(product, countProduct);
+            insertProduct.fire(lot);
+            this.goods.add(lot);
+        }
     }
 
 //    //Вывод всех товаров из списока корзины

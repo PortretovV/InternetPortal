@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-@Remote
 public class ProductDaoImpl extends Dao implements ProductDao {
     private final String ALL_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products";
     //private final String SELECT_PRODUCT = "SELECT `id_product`, `article`, `count`, `cost` FROM products WHERE `id_product` = ?";

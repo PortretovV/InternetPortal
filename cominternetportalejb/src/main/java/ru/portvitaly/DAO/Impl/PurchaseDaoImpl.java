@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Stateless
-@Remote
 public class PurchaseDaoImpl extends Dao implements PurchaseDao {
     private final String ADD_PURCHASE = " INSERT INTO purchase (id_purchase, id_order, id_product, count) VALUE  (NULL, ?, ?, ?)";
 

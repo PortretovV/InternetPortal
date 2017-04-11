@@ -79,13 +79,15 @@
              </div>
          </div>
 
-         <h:commandLink action="basket" value="Корзина"/>
+
 
          <h2>Интернет-магазин</h2>
          <c:forEach items="#{productManage.products}" var="product">
              <h:inputHidden value="#{product.id}"/>
              <h:commandLink value="#{product.article}" action="#{productManage.detail(product.id)}"/><br/>
          </c:forEach>
+
+         <h:commandLink action="basket" value="Корзина"/>
      </h:form>
   </body>
 </html>
